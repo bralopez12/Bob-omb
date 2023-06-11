@@ -14,17 +14,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 /**
  *
@@ -43,12 +37,12 @@ public class PanelDibujo extends JPanel {
 
     private int posicionX;
     private int posicionY;
-    private ArrayList<Imagen> bombas;
+    private ArrayList<Personaje> bombas;
     Random R = new Random();
     AudioClip clic;
     AudioClip error;
 
-    public PanelDibujo(ArrayList<Imagen> bombas) {
+    public PanelDibujo(ArrayList<Personaje> bombas) {
         this.bombas = bombas;
         clic = java.applet.Applet.newAudioClip(getClass().getResource("/images/bombitas.wav"));
 
@@ -65,7 +59,7 @@ public class PanelDibujo extends JPanel {
                 boolean bandera = false;
 
                 for (int i = 0; i < bombas.size(); i++) {
-                    final Imagen im = bombas.get(i);
+                    final Personaje im = bombas.get(i);
                     if (im.isInside(e.getX(), e.getY())) {
 
                         PanelGrafico.Puntajemas1();
@@ -80,10 +74,10 @@ public class PanelDibujo extends JPanel {
                 if (PanelGrafico.isrun()) {
                     if (bandera == false) {
                         PanelGrafico.banderaCambiodeRitmo = 0;
-                        Imagen img = null;
+                        Personaje img = null;
                         error = java.applet.Applet.newAudioClip(getClass().getResource("/images/error.wav"));
                         error.play();
-                        img = new Imagen(e.getX() - 25, e.getY() - 25, "/images/bombred.gif");
+                        img = new Personaje(e.getX() - 25, e.getY() - 25, "/images/bombred.gif");
                         PanelGrafico.Subirvelocidad(3);
                         bombas.add(img);
                     }
@@ -114,7 +108,7 @@ public class PanelDibujo extends JPanel {
         Image img = new ImageIcon(urlfondo).getImage();
         g.drawImage(img, 0, 0, 480, 420, this);
 
-        for (Imagen i : bombas) {
+        for (Personaje i : bombas) {
             i.graficar(g);
         }
     }

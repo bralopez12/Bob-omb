@@ -42,7 +42,7 @@ public class PanelGrafico extends JFrame implements Runnable {
     
     PanelDibujo panel;
 
-    private ArrayList<Imagen> bombas;
+    private ArrayList<Personaje> bombas;
 
     private static Thread hilo1;
    
@@ -285,7 +285,7 @@ public class PanelGrafico extends JFrame implements Runnable {
 
                 puntaje.setText("Puntaje: " + puntos + "    VELOCIDAD: " + velocidadlabel);
 
-                for (Imagen b : bombas) {
+                for (Personaje b : bombas) {
                     if (b.getY() < 10) {
                         iniciar();
                         audio.stop();
@@ -299,7 +299,7 @@ public class PanelGrafico extends JFrame implements Runnable {
                     }
                 }
 
-                for (Imagen r : bombas) {
+                for (Personaje r : bombas) {
                     r.avanzarY();
 
                 }
@@ -318,27 +318,17 @@ public class PanelGrafico extends JFrame implements Runnable {
                     n = R.nextInt(6);
 
                     System.out.println(n);
-                    Imagen img = null;
-
-                    if (n == 1) {
-                        img = new Imagen(200, getHeight() - 60, "/images/bombgif.gif");
-                    } else if (n == 2) {
-                        img = new Imagen(300, getHeight() - 60, "/images/bombgif.gif");
-                    } else if (n == 3) {
-                        img = new Imagen(100, getHeight() - 60, "/images/bombgif.gif");
-                    } else if (n == 4) {
-                        img = new Imagen(400, getHeight() - 60, "/images/bombgif.gif");
-                    } else if (n == 5) {
-                        img = new Imagen(250, getHeight() - 60, "/images/bombgif.gif");
-                    } else {
-
-                        img = new Imagen(150, getHeight() - 60, "/images/bombgif.gif");
-                    }
+                    Personaje img = new Personaje(getHeight() - 60, "/images/bombgif.gif");
+        
                     bandera = 0;
                     bombas.add(img);
                 } else {
                     bandera++;
                 }
+                
+                Random r = new Random(0,1000);
+                
+                
 
                 repaint();
                 Thread.sleep(velocidad);
