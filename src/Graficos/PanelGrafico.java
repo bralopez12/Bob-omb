@@ -325,10 +325,7 @@ public class PanelGrafico extends JFrame implements Runnable {
                 } else {
                     bandera++;
                 }
-                
-                Random r = new Random(0,1000);
-                
-                
+               
 
                 repaint();
                 Thread.sleep(velocidad);

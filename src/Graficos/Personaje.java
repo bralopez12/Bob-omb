@@ -23,6 +23,7 @@ public class Personaje {
     
     private Image Imagen;
     private URL url;
+    private int NivelPersonaje;
 
     public Personaje(int x, int y,String URL) {
         this.x = x;
@@ -34,6 +35,7 @@ public class Personaje {
     
        public Personaje(int WidghtContenedor,String URL) {
         Random r = new Random();
+        this.NivelPersonaje = r.nextInt(0, 5);
         this.x = r.nextInt(0,400);
         this.y = WidghtContenedor;
         
@@ -60,7 +62,7 @@ public class Personaje {
     
     
      public void avanzarY() {
-        y -= 1;
+        y -= 1 + NivelPersonaje;
     }
      
      public boolean isInside(int x, int y) {
@@ -69,7 +71,6 @@ public class Personaje {
     
     public void graficar(Graphics g){
        g.drawImage(Imagen, x,y, 50, 50, null);
-
     }
     
     
