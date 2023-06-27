@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Graficos;
+package Entidades;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -18,17 +18,17 @@ import javax.swing.ImageIcon;
  */
 public class Personaje {
     
-     private int x;
-    private int y;
+    private final int anchoPersonaje = 50;
+    private final int altoPersonaje = 50;
+
     
     private Image Imagen;
     private URL url;
     private int NivelPersonaje;
+    private Posicion posicion;
 
     public Personaje(int x, int y,String URL) {
-        this.x = x;
-        this.y = y;
-        
+        posicion = new Posicion(x,y);
         this.url = getClass().getResource(URL);
         this.Imagen = new ImageIcon(this.url).getImage();
     }
@@ -36,41 +36,40 @@ public class Personaje {
        public Personaje(int WidghtContenedor,String URL) {
         Random r = new Random();
         this.NivelPersonaje = r.nextInt(0, 5);
-        this.x = r.nextInt(0,400);
-        this.y = WidghtContenedor;
+        posicion = new Posicion(r.nextInt(0,400),WidghtContenedor);
         
         this.url = getClass().getResource(URL);
         this.Imagen = new ImageIcon(this.url).getImage();
     }
     
 
-    public int getX() {
-        return x;
+    public int ObtenerPosicionX() {
+        return posicion.getX();
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void AsignarPosicionEnX(int x) {
+        this.posicion.setX(x);
     }
 
-    public int getY() {
-        return y;
+    public int ObtenerPosicionY() {
+        return posicion.getY();
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void AsignarPosicionEnY(int y) {
+        this.posicion.setY(y);
     }
     
     
      public void avanzarY() {
-        y -= 1 + NivelPersonaje;
+        this.posicion.setY(posicion.getY() - 3);
     }
      
      public boolean isInside(int x, int y) {
-        return x >= this.x && x <= this.x + 50 && y >= this.y && y <= this.y + 50;
+        return x >= this.posicion.getX() && x <= this.posicion.getX() + anchoPersonaje && y >= this.posicion.getY() && y <= this.posicion.getY() + altoPersonaje;
     }
     
     public void graficar(Graphics g){
-       g.drawImage(Imagen, x,y, 50, 50, null);
+       g.drawImage(Imagen, posicion.getX(),posicion.getY(), anchoPersonaje, altoPersonaje, null);
     }
     
     

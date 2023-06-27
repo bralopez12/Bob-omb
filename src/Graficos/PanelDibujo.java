@@ -5,6 +5,8 @@
  */
 package Graficos;
 
+import Entidades.Personaje;
+import Sound.SoundsControllers.SoundsManager;
 import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -34,18 +36,17 @@ public class PanelDibujo extends JPanel {
     private int width;
 
     PanelGrafico g;
+    SoundsManager sonidoInstantaneo;
+
 
     private int posicionX;
     private int posicionY;
     private ArrayList<Personaje> bombas;
     Random R = new Random();
-    AudioClip clic;
-    AudioClip error;
 
     public PanelDibujo(ArrayList<Personaje> bombas) {
         this.bombas = bombas;
-        clic = java.applet.Applet.newAudioClip(getClass().getResource("/images/bombitas.wav"));
-
+        sonidoInstantaneo = new SoundsManager();
         controlMouse();
     }
 
@@ -64,8 +65,8 @@ public class PanelDibujo extends JPanel {
 
                         PanelGrafico.Puntajemas1();
                         PanelGrafico.Subirvelocidad(1);
-                        clic.play();
-
+                        sonidoInstantaneo.Reproducir("/Sound/bombitas.wav",0);
+        
                         bombas.remove(i);
                         bandera = true;
                         break;
@@ -75,8 +76,9 @@ public class PanelDibujo extends JPanel {
                     if (bandera == false) {
                         PanelGrafico.banderaCambiodeRitmo = 0;
                         Personaje img = null;
-                        error = java.applet.Applet.newAudioClip(getClass().getResource("/images/error.wav"));
-                        error.play();
+        
+                        sonidoInstantaneo.Reproducir("/Sound/error.wav",0);
+                        
                         img = new Personaje(e.getX() - 25, e.getY() - 25, "/images/bombred.gif");
                         PanelGrafico.Subirvelocidad(3);
                         bombas.add(img);

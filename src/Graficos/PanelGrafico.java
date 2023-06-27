@@ -5,18 +5,14 @@
  */
 package Graficos;
 
-import java.applet.AudioClip;
+import Entidades.Personaje;
+import Sound.SoundsControllers.SoundsManager;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
-import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -30,7 +26,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.WindowConstants;
 
 /**
  *
@@ -51,17 +46,17 @@ public class PanelGrafico extends JFrame implements Runnable {
     public JLabel puntaje;
 
     public JMenuBar menu;
+    
+    SoundsManager musicaPrincipal;
 
     Random R;
-
-    AudioClip audio;
 
     public PanelGrafico() {
         setTitle("Bob-omb");
         setIconImage(new ImageIcon(getClass().getResource("/images/bomb.png")).getImage());
 
-        audio = java.applet.Applet.newAudioClip(getClass().getResource("/images/Backgroundgame.wav"));
-        audio.loop();
+        musicaPrincipal = new SoundsManager(); 
+        musicaPrincipal.Reproducir("/Sound/Backgroundgame.wav",-1);
         initMenuBar();
         initBombas();
         PanelDeControl();
@@ -163,7 +158,8 @@ public class PanelGrafico extends JFrame implements Runnable {
         eMenuItem2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                audio.stop();
+                SoundsManager sonidoInstantaneo = new SoundsManager(); 
+                sonidoInstantaneo.Reproducir("/Sound/bombitas.wav",0);
             }
         });
 
@@ -240,9 +236,6 @@ public class PanelGrafico extends JFrame implements Runnable {
         velocidad = 50;
         velocidadlabel = 0;
         btniniciar.setEnabled(false);
-        audio.stop();
-        audio = java.applet.Applet.newAudioClip(getClass().getResource("/images/Backgroundgame.wav"));
-        audio.loop();
         CambiarFondo("/images/fondo.png");
         bombas.clear();
         iniciar();
@@ -286,11 +279,11 @@ public class PanelGrafico extends JFrame implements Runnable {
                 puntaje.setText("Puntaje: " + puntos + "    VELOCIDAD: " + velocidadlabel);
 
                 for (Personaje b : bombas) {
-                    if (b.getY() < 10) {
+                    if (b.ObtenerPosicionY() < 10) {
                         iniciar();
-                        audio.stop();
-                        audio = java.applet.Applet.newAudioClip(getClass().getResource("/images/gameover.wav"));
-                        audio.play();
+                        musicaPrincipal.Stop();
+                        SoundsManager sonidoInstantaneo = new SoundsManager(); 
+                        sonidoInstantaneo.Reproducir("/Sound/gameover.wav",0);
                         CambiarFondo("/images/boom.png");
                         JOptionPane.showMessageDialog(this, "GAME OVER\n\n"
                                 + "Tu "+ puntaje.getText());
