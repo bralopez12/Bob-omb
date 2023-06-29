@@ -52,8 +52,30 @@ public class PanelDibujo extends JPanel {
 
     public void controlMouse() {
 
-        addMouseListener(new MouseAdapter() {
+        MouseAdapter mouseEvents = new MouseAdapter() {
 
+            int distanciaX, distanciaY;
+            boolean movimiento = false;
+            Personaje personaje;
+            
+             @Override
+            public void mouseReleased(MouseEvent e) {
+                distanciaX = 0;
+                distanciaY = 0;
+                movimiento = false;
+                personaje.setEnMovimiento(false);
+
+            }
+            
+               @Override
+            public void mouseDragged(MouseEvent e) {
+                if(movimiento && personaje != null){
+                    personaje.AsignarPosicionEnX(e.getX() - distanciaX);
+                    personaje.AsignarPosicionEnY(e.getY() - distanciaY);
+                }
+                repaint();
+            }
+            
             @Override
             public void mousePressed(MouseEvent e) {
 
@@ -67,7 +89,11 @@ public class PanelDibujo extends JPanel {
                         PanelGrafico.Subirvelocidad(1);
                         sonidoInstantaneo.Reproducir("/Sound/bombitas.wav",0);
         
-                        bombas.remove(i);
+                        distanciaX = e.getX()-im.ObtenerPosicionX();
+                        distanciaY = e.getY()-im.ObtenerPosicionY();
+                        movimiento = true;
+                        im.setEnMovimiento(true);
+                        personaje = im;
                         bandera = true;
                         break;
                     }
@@ -84,11 +110,13 @@ public class PanelDibujo extends JPanel {
                         bombas.add(img);
                     }
 
-                    repaint();
+//                    repaint();
 
                 }
             }
-        });
+        };
+        addMouseListener(mouseEvents);
+        addMouseMotionListener(mouseEvents);
 
     }
 

@@ -26,6 +26,7 @@ public class Personaje {
     private URL url;
     private int NivelPersonaje;
     private Posicion posicion;
+    private boolean EnMovimiento;
 
     public Personaje(int x, int y,String URL) {
         posicion = new Posicion(x,y);
@@ -70,6 +71,20 @@ public class Personaje {
     
     public void graficar(Graphics g){
        g.drawImage(Imagen, posicion.getX(),posicion.getY(), anchoPersonaje, altoPersonaje, null);
+    }
+
+    /**
+     * @return the EnMovimiento
+     */
+    public boolean isEnMovimiento() {
+        return EnMovimiento;
+    }
+
+    /**
+     * @param EnMovimiento the EnMovimiento to set
+     */
+    public void setEnMovimiento(boolean EnMovimiento) {
+        this.EnMovimiento = EnMovimiento;
     }
     
     

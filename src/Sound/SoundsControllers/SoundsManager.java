@@ -16,7 +16,12 @@ import java.io.IOException;
 public class SoundsManager {
     
     private Clip musicClip;
+    private String soundPath;
+    private int numeroRepeteciones;
         
+    
+    
+    
     public void Reproducir(String soundPath,int numeroRepeticiones) {
     // Lógica para reproducir un efecto de sonido
       try {
@@ -34,11 +39,24 @@ public class SoundsManager {
             e.printStackTrace();
         }
     }
+    
+    public boolean Reproducir(){
+        if(musicClip != null){
+            musicClip.start();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean IsRunning(){
+        return musicClip.isRunning();
+    }
+    
+
 
     public void Stop() {
         if (musicClip != null && musicClip.isRunning()) {
             musicClip.stop();
-            musicClip.close();
         }
     }
         

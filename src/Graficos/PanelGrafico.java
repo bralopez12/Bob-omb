@@ -158,8 +158,13 @@ public class PanelGrafico extends JFrame implements Runnable {
         eMenuItem2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SoundsManager sonidoInstantaneo = new SoundsManager(); 
-                sonidoInstantaneo.Reproducir("/Sound/bombitas.wav",0);
+                if(musicaPrincipal.IsRunning())
+                {
+                    musicaPrincipal.Stop();
+                }else
+                {
+                    musicaPrincipal.Reproducir();
+                }
             }
         });
 
@@ -293,8 +298,9 @@ public class PanelGrafico extends JFrame implements Runnable {
                 }
 
                 for (Personaje r : bombas) {
-                    r.avanzarY();
-
+                    if(!r.isEnMovimiento()){
+                        r.avanzarY();
+                    }
                 }
                 
                 if(banderaCambiodeRitmo == 60){
